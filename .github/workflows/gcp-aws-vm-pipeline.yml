@@ -2,11 +2,17 @@ name: Multi-Cloud VM Creation
 
 on:
   workflow_dispatch:
-    inputs:
-      cloud_provider:
-        description: "Choose the cloud provider: 'gcp' or 'aws'"
-        required: true
-        default: "gcp"
+    choice:
+      type: choice
+      description: "Choose the cloud provider:"
+      options:
+      - aws
+      - gcp
+    # inputs:
+    #   cloud_provider:
+    #     description: "Choose the cloud provider: 'gcp' or 'aws'"
+    #     required: true
+    #     default: "gcp"
 
 jobs:
   terraform:
