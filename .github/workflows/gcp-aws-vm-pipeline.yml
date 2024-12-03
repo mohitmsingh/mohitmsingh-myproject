@@ -1,4 +1,4 @@
-name: Multi-Cloud VM Pipeline
+name: Multi-Cloud VM Creation
 
 on:
   workflow_dispatch:
