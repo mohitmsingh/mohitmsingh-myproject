@@ -4,9 +4,9 @@ on:
   workflow_dispatch:
     inputs:
       cloud_provider:
-        description: "Choose the cloud provider: 'aws' or 'gcp'"
+        description: "Choose the cloud provider: 'gcp' or 'aws'"
         required: true
-        default: "aws"
+        default: "gcp"
 
 jobs:
   terraform:
@@ -22,6 +22,12 @@ jobs:
       with:
         terraform_version: 1.5.6
 
+    - name: Authenticate to GCP
+      if: ${{ github.event.inputs.cloud_provider == 'gcp' }}
+      uses: google-github-actions/auth@v1
+      with:
+        credentials_json: ${{ secrets.GCP_CREDENTIALS }}
+
     - name: Authenticate to AWS
       if: ${{ github.event.inputs.cloud_provider == 'aws' }}
       uses: aws-actions/configure-aws-credentials@v3
@@ -29,12 +35,6 @@ jobs:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: us-east-1
-
-    - name: Authenticate to GCP
-      if: ${{ github.event.inputs.cloud_provider == 'gcp' }}
-      uses: google-github-actions/auth@v1
-      with:
-        credentials_json: ${{ secrets.GCP_CREDENTIALS }}
 
     - name: Initialize Terraform
       run: terraform init
