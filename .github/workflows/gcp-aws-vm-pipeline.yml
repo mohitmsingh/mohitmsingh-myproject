@@ -2,12 +2,13 @@ name: Multi-Cloud VM Creation
 
 on:
   workflow_dispatch:
-    choice:
-      type: choice
-      description: "Choose the cloud provider:"
-      options:
-      - aws
-      - gcp
+    inputs:
+      choice:
+        type: choice
+        description: "Choose the cloud provider:"
+        options:
+        - aws
+        - gcp
     # inputs:
     #   cloud_provider:
     #     description: "Choose the cloud provider: 'gcp' or 'aws'"
